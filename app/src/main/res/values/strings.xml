@@ -4,4 +4,10 @@
     <string name="mesesdiv">Meses para acabar a divida: </string>
     <string name="semanadiv">Semanas para acabar a divida: </string>
 
+    <string name="emp">Emprestimo</string>
+    <string name="empjuros">Juros do Emprestimo</string>
+    <string name="div">Divida</string>
+    <string name="percentord">Percentagem de Ordenado</string>
+    <string name="ord">Ordenado</string>
+
 </resources>
