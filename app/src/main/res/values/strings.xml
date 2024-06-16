@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">CalculadorDeDividas</string>
+    <string name="calcula_div">Calcular Divida</string>
+    <string name="mesesdiv">Meses para acabar a divida: </string>
+    <string name="semanadiv">Semanas para acabar a divida: </string>
+
 </resources>
