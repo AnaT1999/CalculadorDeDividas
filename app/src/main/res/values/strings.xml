@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">CalculadorDeDividas</string>
     <string name="calcula_div">Calcular Divida</string>
-    <string name="mesesdiv">Meses para acabar a divida: </string>
-    <string name="semanadiv">Semanas para acabar a divida: </string>
+    <string name="mesesdiv">Aproximandamente  %s meses para acabar a divida </string>
+    <string name="semanadiv">Aproximandamente  %s semanas para acabar a divida </string>
 
     <string name="emp">Emprestimo</string>
     <string name="empjuros">Juros do Emprestimo (Percentagem)</string>
