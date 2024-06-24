@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -88,12 +89,12 @@ fun InserirNumeros(@StringRes label: Int,
         keyboardOptions = keyboardOptions,
         colors = TextFieldDefaults.colors(
             //cores da caixa de texto
-            unfocusedContainerColor = colorResource(id = R.color.verde_ct),
-            focusedContainerColor = colorResource(id = R.color.azul_ct),
+            unfocusedContainerColor = colorResource(id = R.color.azul_ct),
+            focusedContainerColor = colorResource(id = R.color.verde_ct),
 
             //cores do texto escrito na label
-            unfocusedLabelColor = colorResource(id = R.color.verde_giro),
-            focusedLabelColor = colorResource(id = R.color.azul_giro),
+            unfocusedLabelColor = colorResource(id = R.color.azul_giro),
+            focusedLabelColor = colorResource(id = R.color.verde_giro),
 
             //cor do cursor
             unfocusedIndicatorColor = colorResource(id = R.color.cinza_giro),
@@ -176,107 +177,104 @@ fun LayoutCalculadorDividas() {
     Scaffold(
         topBar = { CalculadorTopBar() }
     ) { contentPadding ->
-        Column(
+        Box(
             modifier = Modifier
-                .statusBarsPadding()
-                .padding(horizontal = 40.dp)
-                .verticalScroll(rememberScrollState())
-                .safeDrawingPadding(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
+                .fillMaxSize()
+                .background(colorResource(id = R.color.tlv_bkg))
+                .padding(contentPadding)
         ) {
-            /*
-            Text(
-                text = stringResource(R.string.calcula_div), modifier = Modifier
-                    .padding(bottom = 16.dp, top = 40.dp)
-                    .align(Alignment.CenterHorizontally), style = tamanhoText
-            )
-
-             */
-
-
-            // Inserir valor de Emprestimo
-            InserirNumeros(
-                label = R.string.emp,
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Next
-                ),
-                value = emprestimoInp,
-                onValueChanged = { emprestimoInp = it },
+            Column(
                 modifier = Modifier
-                    .padding(bottom = 32.dp)
-                    .fillMaxWidth()
-            )
+                    .statusBarsPadding()
+                    .padding(horizontal = 40.dp)
+                    .verticalScroll(rememberScrollState())
+                    .safeDrawingPadding(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+            ) {
 
-            // Inserir valor de Ordenado
-            InserirNumeros(
-                label = R.string.ord,
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Next
-                ),
-                value = ordenadoInp,
-                onValueChanged = { ordenadoInp = it },
-                modifier = Modifier
-                    .padding(bottom = 32.dp)
-                    .fillMaxWidth()
-            )
+                // Inserir valor de Emprestimo
+                InserirNumeros(
+                    label = R.string.emp,
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Next
+                    ),
+                    value = emprestimoInp,
+                    onValueChanged = { emprestimoInp = it },
+                    modifier = Modifier
+                        .padding(bottom = 32.dp)
+                        .fillMaxWidth()
+                )
 
-            // Inserir valor usado do ordenado (Percentagem)
-            InserirNumeros(
-                label = R.string.percentord,
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Next
-                ),
-                value = percentOInp,
-                onValueChanged = { percentOInp = it },
-                modifier = Modifier
-                    .padding(bottom = 32.dp)
-                    .fillMaxWidth()
-            )
-            // Inserir valor de Percentagem de juros sobre o emprestimo
-            InserirNumeros(
-                label = R.string.empjuros,
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Next
-                ),
-                value = jurosPerctInp,
-                onValueChanged = { jurosPerctInp = it },
-                modifier = Modifier
-                    .padding(bottom = 32.dp)
-                    .fillMaxWidth()
-            )
+                // Inserir valor de Ordenado
+                InserirNumeros(
+                    label = R.string.ord,
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Next
+                    ),
+                    value = ordenadoInp,
+                    onValueChanged = { ordenadoInp = it },
+                    modifier = Modifier
+                        .padding(bottom = 32.dp)
+                        .fillMaxWidth()
+                )
 
-            // Inserir valor de Divida
-            InserirNumeros(
-                label = R.string.div,
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Done
-                ),
-                value = dividaInp,
-                onValueChanged = { dividaInp = it },
-                modifier = Modifier
-                    .padding(bottom = 32.dp)
-                    .fillMaxWidth()
-            )
+                // Inserir valor usado do ordenado (Percentagem)
+                InserirNumeros(
+                    label = R.string.percentord,
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Next
+                    ),
+                    value = percentOInp,
+                    onValueChanged = { percentOInp = it },
+                    modifier = Modifier
+                        .padding(bottom = 32.dp)
+                        .fillMaxWidth()
+                )
+                // Inserir valor de Percentagem de juros sobre o emprestimo
+                InserirNumeros(
+                    label = R.string.empjuros,
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Next
+                    ),
+                    value = jurosPerctInp,
+                    onValueChanged = { jurosPerctInp = it },
+                    modifier = Modifier
+                        .padding(bottom = 32.dp)
+                        .fillMaxWidth()
+                )
 
+                // Inserir valor de Divida
+                InserirNumeros(
+                    label = R.string.div,
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done
+                    ),
+                    value = dividaInp,
+                    onValueChanged = { dividaInp = it },
+                    modifier = Modifier
+                        .padding(bottom = 32.dp)
+                        .fillMaxWidth()
+                )
 
-            Text(
-                text = stringResource(R.string.mesesdiv, mes),
-                style = tamanhoText
-            )
+                Text(
+                    text = stringResource(R.string.mesesdiv, mes),
+                    style = tamanhoText
+                )
 
-            Spacer(modifier = Modifier.height(45.dp))
-            Text(
-                text = stringResource(R.string.semanadiv, semanas),
-                style = tamanhoText
-            )
+                Spacer(modifier = Modifier.height(45.dp))
+                Text(
+                    text = stringResource(R.string.semanadiv, semanas),
+                    style = tamanhoText
+                )
 
-            Spacer(modifier = Modifier.height(150.dp))
+                Spacer(modifier = Modifier.height(150.dp))
+            }
         }
     }
 }

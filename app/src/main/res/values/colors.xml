@@ -14,4 +14,7 @@
 
     <color name="verde_ct">#CBEAA6</color>
     <color name="azul_ct">#BBC2E2</color>
+
+    <color name="tlv_bkg">#CBBEB3</color>
+
 </resources>
