@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -49,6 +50,7 @@ import androidx.compose.ui.unit.dp
 import pt.ipg.calculadordedividas.ui.theme.CalculadorDeDividasTheme
 import java.text.NumberFormat
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 class MainActivity : ComponentActivity() {
@@ -102,6 +104,43 @@ fun InserirNumeros(@StringRes label: Int,
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CalculadorTopBar() {
+    Box(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.money_bg),
+            contentDescription = "Background da barra superior",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp)
+        )
+        TopAppBar(
+            title = {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = stringResource(R.string.calcula_div),
+                        color = Color.White,
+                        style = TextStyle(
+                            fontSize = 35.sp,
+                            fontWeight = FontWeight.Bold
+
+                        )
+                    )
+                }
+            },
+            colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color.Transparent)
+        )
+    }
+}
+
+
 @Composable
 fun LayoutCalculadorDividas() {
     var dividaInp by remember { mutableStateOf("") }
@@ -134,84 +173,111 @@ fun LayoutCalculadorDividas() {
 
     val tamanhoText = TextStyle(fontSize = 26.sp)
 
-
-    Column(modifier = Modifier
-        .statusBarsPadding()
-        .padding(horizontal = 40.dp)
-        .verticalScroll(rememberScrollState())
-        .safeDrawingPadding(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,) {
-
-        Text(text = stringResource(R.string.calcula_div), modifier = Modifier
-            .padding(bottom = 16.dp, top = 40.dp)
-            .align(Alignment.CenterHorizontally), style = tamanhoText)
-
-
-
-        // Inserir valor de Emprestimo
-        InserirNumeros(
-            label = R.string.emp,
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number, imeAction = ImeAction.Next),
-            value = emprestimoInp,
-            onValueChanged = { emprestimoInp = it },
+    Scaffold(
+        topBar = { CalculadorTopBar() }
+    ) { contentPadding ->
+        Column(
             modifier = Modifier
-                .padding(bottom = 32.dp)
-                .fillMaxWidth()
-        )
+                .statusBarsPadding()
+                .padding(horizontal = 40.dp)
+                .verticalScroll(rememberScrollState())
+                .safeDrawingPadding(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+        ) {
+            /*
+            Text(
+                text = stringResource(R.string.calcula_div), modifier = Modifier
+                    .padding(bottom = 16.dp, top = 40.dp)
+                    .align(Alignment.CenterHorizontally), style = tamanhoText
+            )
 
-        // Inserir valor de Ordenado
-        InserirNumeros(
-            label = R.string.ord,
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number, imeAction = ImeAction.Next),
-            value = ordenadoInp,
-            onValueChanged = { ordenadoInp = it },
-            modifier = Modifier
-                .padding(bottom = 32.dp)
-                .fillMaxWidth()
-        )
-
-        // Inserir valor usado do ordenado (Percentagem)
-        InserirNumeros(
-            label = R.string.percentord,
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number, imeAction = ImeAction.Next),
-            value = percentOInp,
-            onValueChanged = { percentOInp = it },
-            modifier = Modifier
-                .padding(bottom = 32.dp)
-                .fillMaxWidth()
-        )
-        // Inserir valor de Percentagem de juros sobre o emprestimo
-        InserirNumeros(
-            label = R.string.empjuros,
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number, imeAction = ImeAction.Next),
-            value = jurosPerctInp,
-            onValueChanged = { jurosPerctInp = it },
-            modifier = Modifier
-                .padding(bottom = 32.dp)
-                .fillMaxWidth()
-        )
-
-        // Inserir valor de Divida
-        InserirNumeros(
-            label = R.string.div,
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number, imeAction = ImeAction.Done),
-            value = dividaInp,
-            onValueChanged = { dividaInp = it },
-            modifier = Modifier
-                .padding(bottom = 32.dp)
-                .fillMaxWidth()
-        )
+             */
 
 
-        Text(text = stringResource(R.string.mesesdiv, mes),
-            style = tamanhoText)
+            // Inserir valor de Emprestimo
+            InserirNumeros(
+                label = R.string.emp,
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Next
+                ),
+                value = emprestimoInp,
+                onValueChanged = { emprestimoInp = it },
+                modifier = Modifier
+                    .padding(bottom = 32.dp)
+                    .fillMaxWidth()
+            )
 
-        Spacer(modifier = Modifier.height(45.dp))
-        Text(text = stringResource(R.string.semanadiv, semanas),
-            style = tamanhoText)
+            // Inserir valor de Ordenado
+            InserirNumeros(
+                label = R.string.ord,
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Next
+                ),
+                value = ordenadoInp,
+                onValueChanged = { ordenadoInp = it },
+                modifier = Modifier
+                    .padding(bottom = 32.dp)
+                    .fillMaxWidth()
+            )
 
-        Spacer(modifier = Modifier.height(150.dp))
+            // Inserir valor usado do ordenado (Percentagem)
+            InserirNumeros(
+                label = R.string.percentord,
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Next
+                ),
+                value = percentOInp,
+                onValueChanged = { percentOInp = it },
+                modifier = Modifier
+                    .padding(bottom = 32.dp)
+                    .fillMaxWidth()
+            )
+            // Inserir valor de Percentagem de juros sobre o emprestimo
+            InserirNumeros(
+                label = R.string.empjuros,
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Next
+                ),
+                value = jurosPerctInp,
+                onValueChanged = { jurosPerctInp = it },
+                modifier = Modifier
+                    .padding(bottom = 32.dp)
+                    .fillMaxWidth()
+            )
+
+            // Inserir valor de Divida
+            InserirNumeros(
+                label = R.string.div,
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Done
+                ),
+                value = dividaInp,
+                onValueChanged = { dividaInp = it },
+                modifier = Modifier
+                    .padding(bottom = 32.dp)
+                    .fillMaxWidth()
+            )
+
+
+            Text(
+                text = stringResource(R.string.mesesdiv, mes),
+                style = tamanhoText
+            )
+
+            Spacer(modifier = Modifier.height(45.dp))
+            Text(
+                text = stringResource(R.string.semanadiv, semanas),
+                style = tamanhoText
+            )
+
+            Spacer(modifier = Modifier.height(150.dp))
+        }
     }
 }
 
