@@ -6,7 +6,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,9 +21,15 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldColors
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,6 +37,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -57,19 +69,36 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+
 @Composable
 fun InserirNumeros(@StringRes label: Int,
                    keyboardOptions: KeyboardOptions,
                    value: String,
                    onValueChanged: (String) -> Unit,
                    modifier: Modifier = Modifier) {
+
     TextField(
         value = value,
         onValueChange = onValueChanged,
         singleLine = true,
         label = { Text(stringResource(label)) },
         modifier = modifier,
-        keyboardOptions = keyboardOptions
+        keyboardOptions = keyboardOptions,
+        colors = TextFieldDefaults.colors(
+            //cores da caixa de texto
+            unfocusedContainerColor = colorResource(id = R.color.verde_ct),
+            focusedContainerColor = colorResource(id = R.color.azul_ct),
+
+            //cores do texto escrito na label
+            unfocusedLabelColor = colorResource(id = R.color.verde_giro),
+            focusedLabelColor = colorResource(id = R.color.azul_giro),
+
+            //cor do cursor
+            unfocusedIndicatorColor = colorResource(id = R.color.cinza_giro),
+            focusedIndicatorColor = colorResource(id = R.color.cinza_giro),
+
+            //cores de texto escrito na caixa
+            focusedTextColor=colorResource(id=R.color.black))
     )
 }
 
@@ -105,17 +134,20 @@ fun LayoutCalculadorDividas() {
 
     val tamanhoText = TextStyle(fontSize = 26.sp)
 
+
     Column(modifier = Modifier
         .statusBarsPadding()
         .padding(horizontal = 40.dp)
         .verticalScroll(rememberScrollState())
         .safeDrawingPadding(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center) {
+        verticalArrangement = Arrangement.Center,) {
 
         Text(text = stringResource(R.string.calcula_div), modifier = Modifier
             .padding(bottom = 16.dp, top = 40.dp)
             .align(Alignment.CenterHorizontally), style = tamanhoText)
+
+
 
         // Inserir valor de Emprestimo
         InserirNumeros(
